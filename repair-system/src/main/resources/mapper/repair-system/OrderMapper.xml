@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.OrderMapper">
+
+    <resultMap type="Order" id="OrderResult">
+        <result property="id"    column="id"    />
+        <result property="deviceNumber"    column="device_number"    />
+        <result property="deviceName"    column="device_name"    />
+        <result property="deviceBuyTime"    column="device_buy_time"    />
+        <result property="deviceProductionLine"    column="device_production_line"    />
+        <result property="submitTime"    column="submit_time"    />
+        <result property="repairStartTime"    column="repair_start_time"    />
+        <result property="repairEndTime"    column="repair_end_time"    />
+        <result property="faultPosition"    column="fault_position"    />
+        <result property="faultReason"    column="fault_reason"    />
+        <result property="repairProcess"    column="repair_process"    />
+        <result property="deviceReplacement"    column="device_replacement"    />
+        <result property="repairResult"    column="repair_result"    />
+        <result property="submitMan"    column="submit_man"    />
+        <result property="repairMan"    column="repair_man"    />
+        <result property="checkMan"    column="check_man"    />
+        <result property="note"    column="note"    />
+        <result property="sparePartType"    column="spare_part_type"    />
+        <result property="sparePartStockNumber"    column="spare_part_stock_number"    />
+    </resultMap>
+
+    <sql id="selectOrderVo">
+        select id, device_number, device_name, device_buy_time, device_production_line, submit_time, repair_start_time, repair_end_time, fault_position, fault_reason, repair_process, device_replacement, repair_result, submit_man, repair_man, check_man, note, spare_part_type, spare_part_stock_number from `order`
+    </sql>
+
+    <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        <where>
+            <if test="deviceNumber != null  and deviceNumber != ''"> and device_number = #{deviceNumber}</if>
+            <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
+            <if test="deviceProductionLine != null  and deviceProductionLine != ''"> and device_production_line = #{deviceProductionLine}</if>
+            <if test="params.beginSubmitTime != null and params.beginSubmitTime != '' and params.endSubmitTime != null and params.endSubmitTime != ''"> and submit_time between #{params.beginSubmitTime} and #{params.endSubmitTime}</if>
+            <if test="params.beginRepairStartTime != null and params.beginRepairStartTime != '' and params.endRepairStartTime != null and params.endRepairStartTime != ''"> and repair_start_time between #{params.beginRepairStartTime} and #{params.endRepairStartTime}</if>
+            <if test="params.beginRepairEndTime != null and params.beginRepairEndTime != '' and params.endRepairEndTime != null and params.endRepairEndTime != ''"> and repair_end_time between #{params.beginRepairEndTime} and #{params.endRepairEndTime}</if>
+            <if test="submitMan != null  and submitMan != ''"> and submit_man = #{submitMan}</if>
+            <if test="repairMan != null  and repairMan != ''"> and repair_man = #{repairMan}</if>
+        </where>
+    </select>
+
+    <select id="selectOrderById" parameterType="Long" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceNumber != null">device_number,</if>
+            <if test="deviceName != null">device_name,</if>
+            <if test="deviceBuyTime != null">device_buy_time,</if>
+            <if test="deviceProductionLine != null">device_production_line,</if>
+            <if test="submitTime != null">submit_time,</if>
+            <if test="repairStartTime != null">repair_start_time,</if>
+            <if test="repairEndTime != null">repair_end_time,</if>
+            <if test="faultPosition != null">fault_position,</if>
+            <if test="faultReason != null">fault_reason,</if>
+            <if test="repairProcess != null">repair_process,</if>
+            <if test="deviceReplacement != null">device_replacement,</if>
+            <if test="repairResult != null">repair_result,</if>
+            <if test="submitMan != null">submit_man,</if>
+            <if test="repairMan != null">repair_man,</if>
+            <if test="checkMan != null">check_man,</if>
+            <if test="note != null">note,</if>
+            <if test="sparePartType != null">spare_part_type,</if>
+            <if test="sparePartStockNumber != null">spare_part_stock_number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceNumber != null">#{deviceNumber},</if>
+            <if test="deviceName != null">#{deviceName},</if>
+            <if test="deviceBuyTime != null">#{deviceBuyTime},</if>
+            <if test="deviceProductionLine != null">#{deviceProductionLine},</if>
+            <if test="submitTime != null">#{submitTime},</if>
+            <if test="repairStartTime != null">#{repairStartTime},</if>
+            <if test="repairEndTime != null">#{repairEndTime},</if>
+            <if test="faultPosition != null">#{faultPosition},</if>
+            <if test="faultReason != null">#{faultReason},</if>
+            <if test="repairProcess != null">#{repairProcess},</if>
+            <if test="deviceReplacement != null">#{deviceReplacement},</if>
+            <if test="repairResult != null">#{repairResult},</if>
+            <if test="submitMan != null">#{submitMan},</if>
+            <if test="repairMan != null">#{repairMan},</if>
+            <if test="checkMan != null">#{checkMan},</if>
+            <if test="note != null">#{note},</if>
+            <if test="sparePartType != null">#{sparePartType},</if>
+            <if test="sparePartStockNumber != null">#{sparePartStockNumber},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrder" parameterType="Order">
+        update `order`
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="deviceNumber != null">device_number = #{deviceNumber},</if>
+            <if test="deviceName != null">device_name = #{deviceName},</if>
+            <if test="deviceBuyTime != null">device_buy_time = #{deviceBuyTime},</if>
+            <if test="deviceProductionLine != null">device_production_line = #{deviceProductionLine},</if>
+            <if test="submitTime != null">submit_time = #{submitTime},</if>
+            <if test="repairStartTime != null">repair_start_time = #{repairStartTime},</if>
+            <if test="repairEndTime != null">repair_end_time = #{repairEndTime},</if>
+            <if test="faultPosition != null">fault_position = #{faultPosition},</if>
+            <if test="faultReason != null">fault_reason = #{faultReason},</if>
+            <if test="repairProcess != null">repair_process = #{repairProcess},</if>
+            <if test="deviceReplacement != null">device_replacement = #{deviceReplacement},</if>
+            <if test="repairResult != null">repair_result = #{repairResult},</if>
+            <if test="submitMan != null">submit_man = #{submitMan},</if>
+            <if test="repairMan != null">repair_man = #{repairMan},</if>
+            <if test="checkMan != null">check_man = #{checkMan},</if>
+            <if test="note != null">note = #{note},</if>
+            <if test="sparePartType != null">spare_part_type = #{sparePartType},</if>
+            <if test="sparePartStockNumber != null">spare_part_stock_number = #{sparePartStockNumber},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderById" parameterType="Long">
+        delete from `order` where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderByIds" parameterType="String">
+        delete from `order` where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

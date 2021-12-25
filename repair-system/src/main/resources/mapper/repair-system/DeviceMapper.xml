@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.web.mapper.DeviceMapper">
+
+    <resultMap type="Device" id="DeviceResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="buyTime"    column="buy_time"    />
+        <result property="productionLine"    column="production_line"    />
+        <result property="manufacturer"    column="manufacturer"    />
+        <result property="type"    column="type"    />
+        <result property="fixedAssetId"    column="fixed_asset_id"    />
+        <result property="supplierPhoneNumber"    column="supplier_phone_number"    />
+        <result property="number"    column="number"    />
+    </resultMap>
+
+    <sql id="selectDeviceVo">
+        select id, name, buy_time, production_line, manufacturer, type, fixed_asset_id, supplier_phone_number, number from device
+    </sql>
+
+    <select id="selectDeviceList" parameterType="Device" resultMap="DeviceResult">
+        <include refid="selectDeviceVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="params.beginBuyTime != null and params.beginBuyTime != '' and params.endBuyTime != null and params.endBuyTime != ''"> and buy_time between #{params.beginBuyTime} and #{params.endBuyTime}</if>
+            <if test="productionLine != null  and productionLine != ''"> and production_line = #{productionLine}</if>
+            <if test="manufacturer != null  and manufacturer != ''"> and manufacturer = #{manufacturer}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="fixedAssetId != null "> and fixed_asset_id = #{fixedAssetId}</if>
+            <if test="supplierPhoneNumber != null "> and supplier_phone_number = #{supplierPhoneNumber}</if>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+        </where>
+    </select>
+
+    <select id="selectDeviceById" parameterType="Long" resultMap="DeviceResult">
+        <include refid="selectDeviceVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertDevice" parameterType="Device" useGeneratedKeys="true" keyProperty="id">
+        insert into device
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="buyTime != null">buy_time,</if>
+            <if test="productionLine != null">production_line,</if>
+            <if test="manufacturer != null">manufacturer,</if>
+            <if test="type != null">type,</if>
+            <if test="fixedAssetId != null">fixed_asset_id,</if>
+            <if test="supplierPhoneNumber != null">supplier_phone_number,</if>
+            <if test="number != null">number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="buyTime != null">#{buyTime},</if>
+            <if test="productionLine != null">#{productionLine},</if>
+            <if test="manufacturer != null">#{manufacturer},</if>
+            <if test="type != null">#{type},</if>
+            <if test="fixedAssetId != null">#{fixedAssetId},</if>
+            <if test="supplierPhoneNumber != null">#{supplierPhoneNumber},</if>
+            <if test="number != null">#{number},</if>
+         </trim>
+    </insert>
+
+    <update id="updateDevice" parameterType="Device">
+        update device
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="buyTime != null">buy_time = #{buyTime},</if>
+            <if test="productionLine != null">production_line = #{productionLine},</if>
+            <if test="manufacturer != null">manufacturer = #{manufacturer},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="fixedAssetId != null">fixed_asset_id = #{fixedAssetId},</if>
+            <if test="supplierPhoneNumber != null">supplier_phone_number = #{supplierPhoneNumber},</if>
+            <if test="number != null">number = #{number},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteDeviceById" parameterType="Long">
+        delete from device where id = #{id}
+    </delete>
+
+    <delete id="deleteDeviceByIds" parameterType="String">
+        delete from device where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

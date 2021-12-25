@@ -9,11 +9,11 @@ import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.domain.model.RegisterBody;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.web.service.SysRegisterService;
-import com.ruoyi.system.service.ISysConfigService;
+import com.ruoyi.web.service.ISysConfigService;
 
 /**
  * 注册验证
- * 
+ *
  * @author ruoyi
  */
 @RestController

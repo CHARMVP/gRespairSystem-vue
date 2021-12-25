@@ -1,0 +1,61 @@
+package com.ruoyi.web.service;
+
+import java.util.List;
+import com.ruoyi.web.domain.Order;
+
+/**
+ * 报修信息Service接口
+ *
+ * @author guo
+ * @date 2021-12-24
+ */
+public interface IOrderService
+{
+    /**
+     * 查询报修信息
+     *
+     * @param id 报修信息主键
+     * @return 报修信息
+     */
+    public Order selectOrderById(Long id);
+
+    /**
+     * 查询报修信息列表
+     *
+     * @param order 报修信息
+     * @return 报修信息集合
+     */
+    public List<Order> selectOrderList(Order order);
+
+    /**
+     * 新增报修信息
+     *
+     * @param order 报修信息
+     * @return 结果
+     */
+    public int insertOrder(Order order);
+
+    /**
+     * 修改报修信息
+     *
+     * @param order 报修信息
+     * @return 结果
+     */
+    public int updateOrder(Order order);
+
+    /**
+     * 批量删除报修信息
+     *
+     * @param ids 需要删除的报修信息主键集合
+     * @return 结果
+     */
+    public int deleteOrderByIds(Long[] ids);
+
+    /**
+     * 删除报修信息信息
+     *
+     * @param id 报修信息主键
+     * @return 结果
+     */
+    public int deleteOrderById(Long id);
+}
