@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 //import com.ruoyi.web.domain.Device;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  *
  * @author ruoyi
  */
+@EnableScheduling
 @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 //@ComponentScan(value = "com.ruoyi.web")
 //@MapperScan(value = "com.ruoyi.system.mapper")
