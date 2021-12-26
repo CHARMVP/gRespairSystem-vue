@@ -30,6 +30,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select id, device_number, device_name, device_buy_time, device_production_line, submit_time, repair_start_time, repair_end_time, fault_position, fault_reason, repair_process, device_replacement, repair_result, submit_man, repair_man, check_man, note, spare_part_type, spare_part_stock_number from `order`
     </sql>
 
+<!--    <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">-->
+<!--        <include refid="selectOrderVo"/>-->
+<!--        <where>-->
+<!--            <if test="deviceNumber != null  and deviceNumber != ''"> and device_number = #{deviceNumber}</if>-->
+<!--            <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>-->
+<!--            <if test="deviceProductionLine != null  and deviceProductionLine != ''"> and device_production_line = #{deviceProductionLine}</if>-->
+<!--            <if test="params.beginSubmitTime != null and params.beginSubmitTime != '' and params.endSubmitTime != null and params.endSubmitTime != ''"> and submit_time between #{params.beginSubmitTime} and #{params.endSubmitTime}</if>-->
+<!--            <if test="params.beginRepairStartTime != null and params.beginRepairStartTime != '' and params.endRepairStartTime != null and params.endRepairStartTime != ''"> and repair_start_time between #{params.beginRepairStartTime} and #{params.endRepairStartTime}</if>-->
+<!--            <if test="params.beginRepairEndTime != null and params.beginRepairEndTime != '' and params.endRepairEndTime != null and params.endRepairEndTime != ''"> and repair_end_time between #{params.beginRepairEndTime} and #{params.endRepairEndTime}</if>-->
+<!--            <if test="submitMan != null  and submitMan != ''"> and submit_man = #{submitMan}</if>-->
+<!--            <if test="repairMan != null  and repairMan != ''"> and repair_man = #{repairMan}</if>-->
+<!--        </where>-->
+<!--    </select>    -->
+    <!-- 对报修记录时间查询进行修正 -->
     <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
         <include refid="selectOrderVo"/>
         <where>
@@ -37,8 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="deviceName != null  and deviceName != ''"> and device_name like concat('%', #{deviceName}, '%')</if>
             <if test="deviceProductionLine != null  and deviceProductionLine != ''"> and device_production_line = #{deviceProductionLine}</if>
             <if test="params.beginSubmitTime != null and params.beginSubmitTime != '' and params.endSubmitTime != null and params.endSubmitTime != ''"> and submit_time between #{params.beginSubmitTime} and #{params.endSubmitTime}</if>
-            <if test="params.beginRepairStartTime != null and params.beginRepairStartTime != '' and params.endRepairStartTime != null and params.endRepairStartTime != ''"> and repair_start_time between #{params.beginRepairStartTime} and #{params.endRepairStartTime}</if>
-            <if test="params.beginRepairEndTime != null and params.beginRepairEndTime != '' and params.endRepairEndTime != null and params.endRepairEndTime != ''"> and repair_end_time between #{params.beginRepairEndTime} and #{params.endRepairEndTime}</if>
+            <if test="params.beginRepairStartTime != null and params.beginRepairStartTime != '' and params.endRepairStartTime != null and params.endRepairStartTime != ''"> and repair_start_time &gt;= #{params.beginRepairStartTime} and repair_end_time &lt;= #{params.endRepairStartTime}</if>
             <if test="submitMan != null  and submitMan != ''"> and submit_man = #{submitMan}</if>
             <if test="repairMan != null  and repairMan != ''"> and repair_man = #{repairMan}</if>
         </where>

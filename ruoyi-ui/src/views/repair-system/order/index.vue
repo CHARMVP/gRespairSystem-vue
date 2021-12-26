@@ -19,16 +19,16 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="设备生产线" prop="deviceProductionLine">
+      <el-form-item label="生产线" prop="deviceProductionLine">
         <el-input
           v-model="queryParams.deviceProductionLine"
-          placeholder="请输入设备生产线"
+          placeholder="设备生产线"
           clearable
           size="small"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="报修时间">
+      <el-form-item label="报修时间" >
         <el-date-picker
           v-model="daterangeSubmitTime"
           size="small"
@@ -40,7 +40,7 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="维修开始时间">
+      <el-form-item label="维修时间">
         <el-date-picker
           v-model="daterangeRepairStartTime"
           size="small"
@@ -52,7 +52,7 @@
           end-placeholder="结束日期"
         ></el-date-picker>
       </el-form-item>
-      <el-form-item label="维修结束时间">
+      <el-form-item label="维修结束时间" v-show="false">
         <el-date-picker
           v-model="daterangeRepairEndTime"
           size="small"
@@ -136,7 +136,7 @@
 
     <el-table v-loading="loading" :data="orderList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="维修记录id" align="center" prop="id" />
+      <!-- <el-table-column label="维修记录id" align="center" prop="id" /> -->
       <el-table-column label="设备编号" align="center" prop="deviceNumber" />
       <el-table-column label="设备名称" align="center" prop="deviceName" />
       <el-table-column label="设备购买时间" align="center" prop="deviceBuyTime" width="180">
@@ -190,7 +190,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
