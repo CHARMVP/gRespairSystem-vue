@@ -4,6 +4,7 @@ import com.ruoyi.web.domain.Device;
 import com.ruoyi.web.util.QRCodeUtils;
 import com.ruoyi.web.util.ZipUtils;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,8 @@ import java.util.Date;
 @RequestMapping("/repair-system/QRCode")
 public class QRCodeController {
 
+    @Autowired
+    private QRCodeUtils qrCodeUtils;
 //    @ApiOperation(value = "下载二维码图片")
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(name = "domain", value = "当前域名", required = true, dataType = "String", paramType = "query"),
@@ -34,7 +37,7 @@ public class QRCodeController {
 //    })
     @GetMapping("/QRCodeDownLoad")
     public String downloadQRCode(String domain, String deviceNumber, String deviceName, String productionLine, Date buyTime,
-                                 Integer deviceStartNum, Integer deviceEndNum, HttpServletResponse response) {
+                                 Integer deviceStartNum, Integer deviceEndNum, HttpServletResponse response) throws IOException {
         String domain1 = "www.baidu.com";
         Device device = new Device();
         device.setNumber("000");
@@ -42,7 +45,7 @@ public class QRCodeController {
         device.setProductionLine("line");
         device.setBuyTime(new Date());
 
-        String dirPath = QRCodeUtils.generateQRCode(domain1, device, 1, 1);
+        String dirPath = qrCodeUtils.generateQRCode(domain1, null);
         String zipFileName = deviceName + "&" + buyTime + ".zip";
         String zipFilePath = dirPath + zipFileName;
         boolean zipResult = ZipUtils.singleFileCompress(dirPath, zipFilePath, null);

@@ -125,6 +125,17 @@
           v-hasPermi="['repair-system:device:export']"
         >导出</el-button>
       </el-col>
+        <!-- 下载二维码 -->
+      <el-col :span="1.5">
+        <el-button
+          type="warning"
+          plain
+          icon="el-icon-download"
+          size="mini"
+          @click="handleExportQRCode"
+          v-hasPermi="['repair-system:device:export']"
+        >下载二维码</el-button>
+      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -162,7 +173,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -213,7 +224,8 @@
 </template>
 
 <script>
-import { listDevice, getDevice, delDevice, addDevice, updateDevice } from "@/api/repair-system/device";
+import {listDevice, getDevice, delDevice, addDevice, updateDevice, downloadQRCode} from "@/api/repair-system/device";
+import axios from "axios";
 
 export default {
   name: "Device",
@@ -256,7 +268,9 @@ export default {
       form: {},
       // 表单校验
       rules: {
-      }
+      },
+      //下载路径
+      path: null
     };
   },
   created() {
@@ -362,10 +376,19 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
+
       this.download('repair-system/device/export', {
         ...this.queryParams
       }, `device_${new Date().getTime()}.xlsx`)
-    }
+    },
+
+    /** 导出二维码操作 */
+    handleExportQRCode() {
+      downloadQRCode();
+      const fileName = "/profile/upload/download/QRCode.zip";
+      this.$download.resource(fileName);
+    },
+
   }
 };
 </script>

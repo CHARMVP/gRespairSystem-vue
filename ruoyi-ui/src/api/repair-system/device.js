@@ -42,3 +42,11 @@ export function delDevice(id) {
     method: 'delete'
   })
 }
+
+// 下载二维码
+export function downloadQRCode() {
+  return request({
+    url: '/repair-system/device/exportQRCode',
+    method: 'post'
+  })
+}

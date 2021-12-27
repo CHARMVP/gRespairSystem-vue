@@ -1,5 +1,10 @@
 package com.ruoyi.web.util;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.ResourceLoader;
+
 /**
  * @author guo Email:guoshuaihui20@mails.ucas.ac.cn
  * @date 2021/12/23 16:08
@@ -38,8 +43,10 @@ public interface ConstantUtils {
 
     class Path{
 
+
         //虚拟目录地址
         public static final String DIRPATH = "D:/Images";
+//        public static final String DIRPATH = new ClassPathResource("resources.properties",ConstantUtils.class.getClassLoader()).getPath();
 
         public static final String QRCODEPATH = "/QRCODE";
 

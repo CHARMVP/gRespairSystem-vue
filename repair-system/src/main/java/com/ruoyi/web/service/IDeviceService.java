@@ -58,4 +58,12 @@ public interface IDeviceService
      * @return 结果
      */
     public int deleteDeviceById(Long id);
+
+    /**
+     * 下载二维码
+     *
+     * @param list
+     * @return 结果
+     */
+    public Boolean downloadQRCode(List<Device> list);
 }
