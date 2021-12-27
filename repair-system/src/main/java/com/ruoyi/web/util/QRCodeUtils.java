@@ -97,8 +97,9 @@ public class QRCodeUtils {
             BufferedImage bufferedImage = null;
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String currentDate = simpleDateFormat.format(new Date());
-            String DIRPATH = "D:/ruoyi/uploadPath/download";
+            String DIRPATH = "D:\\ruoyi\\uploadPath\\download";
             String realPath = DIRPATH ;
+
             File outPutFileDir = new File(realPath);
             if (!outPutFileDir.exists()) {
                 outPutFileDir.mkdirs();
