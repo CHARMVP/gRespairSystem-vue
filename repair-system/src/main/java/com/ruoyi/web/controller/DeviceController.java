@@ -80,6 +80,8 @@ public class DeviceController extends BaseController
         String domain = "http://localhost/order/order";
         String dirPath = null;
         try {
+            ZipUtils.deleteFile("D:/ruoyi/uploadPath/download/QrCode");
+
             dirPath = qrCodeUtils.generateQRCode(domain, list);
         } catch (IOException e) {
             e.printStackTrace();
@@ -98,8 +100,8 @@ public class DeviceController extends BaseController
                 BufferedInputStream bis = null;
                 try {
                     fis = new FileInputStream(file);
-                    IOUtils.copy(fis, response.getOutputStream());
-                    response.flushBuffer();
+//                    IOUtils.copy(fis, response.getOutputStream());
+//                    response.flushBuffer();
                     System.out.println("success");
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();

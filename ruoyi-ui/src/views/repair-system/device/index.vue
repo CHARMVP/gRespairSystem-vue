@@ -385,7 +385,7 @@ export default {
     /** 导出二维码操作 */
     handleExportQRCode() {
       downloadQRCode();
-      const fileName = "/profile/upload/download/QRCode.zip";
+      const fileName = "/profile/download/QrCode/QRCode.zip";
       this.$download.resource(fileName);
     },
 

@@ -77,5 +77,85 @@ public class ZipUtils {
             return false;
         }
     }
+
+    /**
+     * 删除文件
+     * @param path 文件夹路径或文件路径
+     * @return
+     */
+    public static boolean deleteFile(String path) {
+
+        File file = new File(path);
+        if (!file.exists()) {
+        }
+        //是文件夹
+        if(file.isDirectory()) {
+            File[] listfile = file.listFiles();
+            if (delAllFile(path)) {
+                return true;
+            } else {
+            }
+        }
+        //是文件
+        if(!file.isDirectory()) {
+            if (file.delete()) {
+                return true;
+            } else {
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * 删除指定文件夹下所有文件
+     * @param path 文件夹完整绝对路径
+     */
+    private static boolean delAllFile(String path) {
+        boolean flag = false;
+        File file = new File(path);
+        if (!file.exists()) { return flag; }
+        String[] tempList = file.list();
+        File temp = null;
+        for (int i = 0; i < tempList.length; i++) {
+            if (path.endsWith(File.separator)) {
+                temp = new File(path + tempList[i]);
+            } else {
+                temp = new File(path + File.separator + tempList[i]);
+            }
+            //是文件
+            if (temp.isFile()) {
+                temp.delete();
+                flag = true;
+            }
+            //是文件夹
+            if (temp.isDirectory()) {
+                //先删除文件夹里面的文件
+                delAllFile(path + "/" + tempList[i]);
+                //再删除空文件夹
+                delFolder(path + "/" + tempList[i]);
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
+    /**
+     * 删除文件夹
+     * @param folderPath 文件夹完整绝对路径
+     */
+    private static void delFolder(String folderPath) {
+        try {
+            //删除完里面所有内容
+            delAllFile(folderPath);
+            String filePath = folderPath;
+            filePath = filePath.toString();
+            java.io.File myFilePath = new java.io.File(filePath);
+            //删除空文件夹
+            myFilePath.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 
